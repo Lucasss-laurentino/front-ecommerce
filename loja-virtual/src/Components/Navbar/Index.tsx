@@ -2,7 +2,7 @@ import './Navbar.css';
 
 export default function Navbar() {
     return (
-        <nav className="navbar navbar-expand-sm mt-3 p-0">
+        <nav className="navbar navbar-expand-sm my-3 p-0">
 
             <div className="container justify-content-sm-start mx-4">
                 <a className="text-decoration-none font d-flex align-items-center">
