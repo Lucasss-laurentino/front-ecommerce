@@ -2,3 +2,75 @@
     width: 100%;
     max-height: 500px;
 }
+
+/* classe usada no state pra esconder o menu */
+.hidden {
+
+    width: 100%;
+    z-index: 1;
+
+    display: flex;
+    justify-content: end;
+    position: absolute;
+
+    opacity: 0.0;
+
+    animation: hidden 0.1s ease-out alternate;
+
+}
+
+@keyframes hidden {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.4;
+    }
+    100%{
+        opacity: 0.0;
+    }
+}
+
+.show {
+
+    width: 100%;
+    z-index: 1;
+
+    display: flex;
+    justify-content: end;
+    position: absolute;
+
+    animation: show 0.1s ease-out alternate;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0.0;
+    }
+    50%{
+        opacity: 0.4;
+    }
+    100%{
+        opacity: 0.8;
+    }
+}
+
+.menu-adm {
+
+    width: 100%;
+    z-index: 1;
+
+}
+
+.list-menu {
+    width: 30%;
+    padding: 10px;
+    list-style: none;
+    background-color: #DB3C46;
+    color: white;
+    opacity: 0.8;
+}
+
+.item-list-menu {
+    border-bottom: 1px solid white;
+}

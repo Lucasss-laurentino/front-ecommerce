@@ -1,6 +1,20 @@
 import './Navbar.css';
 
-export default function Navbar() {
+interface Props {
+    menuHidden: string,
+    setMenuHidden: (classe: string) => void,
+}
+
+export default function Navbar({menuHidden, setMenuHidden}: Props) {
+
+    const showOrHiddenMenu = () => {
+        if(menuHidden === 'show'){
+            setMenuHidden('hidden')
+        } else {
+            setMenuHidden('show')
+        }
+    }
+
     return (
         <nav className="navbar navbar-expand-sm my-3 p-0">
 
@@ -15,7 +29,7 @@ export default function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
             </div>
-            
+
             <div className="collapse w-100 mx-3 navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul className="list-inline font mr-auto my-0 ">
                     <li className="list-inline-item active">
@@ -34,11 +48,11 @@ export default function Navbar() {
                     </li>
                     <li className="list-inline-item">
                         <div className="container-flui w-100 d-flex justify-content-center">
-                            <a className="nav-link d-flex align-items-center items-menu justify-content-center" href="#">
+                            <button className="nav-link d-flex align-items-center items-menu justify-content-center border border-white bg-white" onClick={showOrHiddenMenu}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-bag-plus-fill" viewBox="0 0 16 16">
                                     <path fillRule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z" />
                                 </svg>
-                            </a>
+                            </button>
                         </div>
                     </li>
                 </ul>
