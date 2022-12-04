@@ -1,0 +1,28 @@
+.color {
+    color: #F86666;
+}
+
+.list-category {
+    padding: 10px;
+    list-style: none;
+}
+
+.input-border {
+    margin-bottom: 20px;
+    border: none;
+    color: #F86666;
+    border-bottom: 2px solid #F86666;
+    outline: 0;
+}
+
+.input-border::placeholder {
+    color: #F86666;
+}
+
+.button-category {
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #F86666;
+    background-color: #F86666;
+}
