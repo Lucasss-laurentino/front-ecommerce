@@ -4,6 +4,7 @@ import Carrousel from '../../Components/Carrousel/Index';
 import Footer from '../../Components/Footer/Index';
 import ListCategory from '../../Components/List-category/Index';
 import ModalCategory from '../../Components/ModalCategory/Index';
+import ModalSubCategory from '../../Components/ModalSubCategory/Index';
 import Navbar from '../../Components/Navbar/Index';
 import './Index.css';
 
@@ -15,6 +16,8 @@ export default function Index() {
     // Modal categoria
     const [modalCategory, setModalCategory] = useState<boolean>(false);
 
+    // Modal sub category
+    const [modalSubCategory, setModalSubCategory] = useState<boolean>(false);
 
     return (
         <>
@@ -22,6 +25,11 @@ export default function Index() {
             <ModalCategory
                 modalCategory={modalCategory}
                 setModalCategory={() => setModalCategory(false)}
+            />
+
+            <ModalSubCategory 
+                modalSubCategory={modalSubCategory}
+                setModalSubCategory={() => setModalSubCategory(false)}
             />
 
             <Navbar 
@@ -32,6 +40,7 @@ export default function Index() {
             <Carrousel
                 menuHidden={menuHidden}
                 setModalCategory={() => setModalCategory(true)}
+                setModalSubCategory={() => setModalSubCategory(true)}
             />
 
             <ListCategory />

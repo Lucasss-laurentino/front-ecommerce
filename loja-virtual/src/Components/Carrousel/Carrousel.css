@@ -73,4 +73,10 @@
 
 .item-list-menu {
     border-bottom: 1px solid white;
+    cursor: pointer;
+}
+
+.item-list-menu:hover {
+    color: #DB3C46;
+    background-color: white;
 }

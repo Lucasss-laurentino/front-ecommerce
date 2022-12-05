@@ -1,0 +1,52 @@
+.color-modal-sub-category {
+    color: #DB3C46;
+}
+.list-categories {
+    color: #DB3C46;
+    text-align: center;
+    list-style: none;
+    display: block;
+}
+.list-categories-hiden {
+    display: none;
+}
+
+.p-sub-categories {
+    color: #DB3C46;
+}
+
+.btn-callback {
+    color: white;
+    background-color: #DB3C46;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn-callback:hover {
+
+    border: 1px solid #DB3C46;
+    color: #DB3C46;
+    background-color: white;
+
+}
+.input-sub-category {
+    border: none;
+    border-bottom: 1px solid #DB3C46;
+}
+
+.input-sub-category::placeholder {
+    color: #DB3C46;
+    outline: 0;
+}
+
+.formSubCategory-hiden {
+    display: none;
+}
+
+.formSubCategory {
+    display: block;
+}
+
+.item-list-sub-category {
+    cursor: pointer;
+}
