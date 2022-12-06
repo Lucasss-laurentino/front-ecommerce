@@ -4,8 +4,10 @@ import Carrousel from '../../Components/Carrousel/Index';
 import Footer from '../../Components/Footer/Index';
 import ListCategory from '../../Components/List-category/Index';
 import ModalCategory from '../../Components/ModalCategory/Index';
+import ModalCreateProduct from '../../Components/ModalCreateProduct/Index';
 import ModalSubCategory from '../../Components/ModalSubCategory/Index';
 import Navbar from '../../Components/Navbar/Index';
+import Category from '../../Inteface/Category';
 import './Index.css';
 
 export default function Index() {
@@ -19,17 +21,29 @@ export default function Index() {
     // Modal sub category
     const [modalSubCategory, setModalSubCategory] = useState<boolean>(false);
 
+    // Modal create Product
+    const [modalCreateProduct, setModalCreateProduct] = useState<boolean>(false);
+
+    // Categories
+    const [categories, setCategories] = useState<Category[]>([]);
+
     return (
         <>
 
             <ModalCategory
                 modalCategory={modalCategory}
                 setModalCategory={() => setModalCategory(false)}
+                setCategories={(categories) => setCategories(categories)}
             />
 
             <ModalSubCategory 
                 modalSubCategory={modalSubCategory}
                 setModalSubCategory={() => setModalSubCategory(false)}
+            />
+
+            <ModalCreateProduct
+                modalCreateProduct={modalCreateProduct}
+                setModalCreateProduct={() => setModalCreateProduct(false)}
             />
 
             <Navbar 
@@ -41,9 +55,13 @@ export default function Index() {
                 menuHidden={menuHidden}
                 setModalCategory={() => setModalCategory(true)}
                 setModalSubCategory={() => setModalSubCategory(true)}
+                setModalCreateProduct={() => setModalCreateProduct(true)}
             />
 
-            <ListCategory />
+            <ListCategory 
+                categories={categories}
+                setCategories={(categories) => setCategories(categories)}
+            />
 
             <CardProduct />
 
