@@ -33,12 +33,14 @@ export default function Index() {
             <ModalCategory
                 modalCategory={modalCategory}
                 setModalCategory={() => setModalCategory(false)}
+                categories={categories}
                 setCategories={(categories) => setCategories(categories)}
             />
 
             <ModalSubCategory 
                 modalSubCategory={modalSubCategory}
                 setModalSubCategory={() => setModalSubCategory(false)}
+                categories={categories}
             />
 
             <ModalCreateProduct
@@ -62,6 +64,8 @@ export default function Index() {
                 categories={categories}
                 setCategories={(categories) => setCategories(categories)}
             />
+
+            {/* div com sub categorias */}
 
             <CardProduct />
 

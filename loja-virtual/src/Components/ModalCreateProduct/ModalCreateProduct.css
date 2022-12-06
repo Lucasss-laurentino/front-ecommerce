@@ -1,0 +1,21 @@
+.p-create-product {
+    color:  #DB3C46;
+}
+
+.input-product {
+    color: #DB3C46;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #DB3C46;
+    outline: 0;
+}
+.input-product::placeholder {
+    color: #DB3C46;
+}
+
+.create-button {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: #DB3C46;
+}

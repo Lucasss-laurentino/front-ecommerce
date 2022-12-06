@@ -7,10 +7,11 @@ import Category from '../../Inteface/Category';
 interface Props {
     modalCategory: boolean,
     setModalCategory: () => void,
+    categories: Category[],
     setCategories: (categories: Category[]) => void,
 }
 
-export default function ModalCategory({ modalCategory, setModalCategory, setCategories }: Props) {
+export default function ModalCategory({ modalCategory, setModalCategory, categories, setCategories }: Props) {
 
     const [category, setCategory] = useState<string>('');
     const [imageOne, setImageOne] = useState<File | null>();
@@ -85,9 +86,11 @@ export default function ModalCategory({ modalCategory, setModalCategory, setCate
                 <div className="container">
                     <p className='m-0 text-center h6 color'>Categorias existentes</p>
                     <ul className='color list-category'>
-                        <li className='text-center'>Roupas</li>
-                        <li className='text-center'>Bolsas</li>
-                        <li className='text-center'>Jóias</li>
+                        {categories.map((category) => {
+                            return (
+                                <li key={category.id} className='text-center'>{category.name}</li>
+                            )
+                        })}
                     </ul>
                     <div className="container">
                         <form action="" className="form-group" onSubmit={createCategory}>

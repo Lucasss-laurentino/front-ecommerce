@@ -50,3 +50,8 @@
 .item-list-sub-category {
     cursor: pointer;
 }
+
+.list-sub-categories {
+    color: #DB3C46;
+    list-style: none;
+}

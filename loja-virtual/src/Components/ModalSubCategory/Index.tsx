@@ -1,13 +1,17 @@
 import './ModalSubCategory.css';
 import Modal from 'react-bootstrap/Modal';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Category from '../../Inteface/Category';
+import http from '../../http/http';
+import SubCategory from '../../Inteface/SubCategory';
 
 interface Props {
     modalSubCategory: boolean,
     setModalSubCategory: () => void,
+    categories: Category[],
 }
 
-export default function ModalSubCategory({ modalSubCategory, setModalSubCategory }: Props) {
+export default function ModalSubCategory({ modalSubCategory, setModalSubCategory, categories }: Props) {
 
     // Classe para esconder lista de categorias da modal
     const [listCategories, setListCategories] = useState<string>('list-categories');
@@ -15,16 +19,33 @@ export default function ModalSubCategory({ modalSubCategory, setModalSubCategory
     // Classe para esconder ou mostrar formulario de cadastro para sub categoria
     const [formSubCategory, setFormSubCategory] = useState<string>('formSubCategory-hiden');
 
+    // Categoria selecionada
+    const [category, setCategory] = useState<string>('');
+
+    // Nome categoria
+    const [subCategoryName, setSubCategoryName] = useState<string>('');
+
+    // Sub categorias
+    const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+
+    useEffect(() => {
+        if(category){
+            http.get(`getSubCategories/${category}`).then((response) => {
+                setSubCategories([...response.data])
+            })
+    
+        }
+    }, [category]); 
+
     const closeModal = () => {
         setListCategories('list-categories');
         setFormSubCategory('formSubCategory-hiden')
         setModalSubCategory();
     }
 
-    const selectCategory = (id: number) => {
+    const selectCategory = (name: string) => {
 
-
-        // selecionar sub categorias de categoria (id)
+        setCategory(name)
 
         setListCategories('list-categories-hiden')
         setFormSubCategory('formSubCategory')
@@ -33,6 +54,14 @@ export default function ModalSubCategory({ modalSubCategory, setModalSubCategory
     const closeFormShowList = () => {
         setFormSubCategory('formSubCategory-hiden')
         setListCategories('list-categories')
+    }
+
+    const createSubCategory = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        http.post('createSubCategory', {category, subCategoryName}).then((response) => {
+            setSubCategories([...response.data])
+        })
     }
 
 
@@ -53,24 +82,34 @@ export default function ModalSubCategory({ modalSubCategory, setModalSubCategory
             <Modal.Body>
                 <div className="container">
                     <ul className={listCategories}>
-                        <li className='my-3 item-list-sub-category h4' onClick={() => selectCategory(1)}>Roupas</li>
-                        <li className='my-3 item-list-sub-category h4' onClick={() => selectCategory(2)}>Bolsas</li>
-                        <li className='my-3 item-list-sub-category h4' onClick={() => selectCategory(3)}>Jóias</li>
+                        {categories.map((category) => {
+                            return (
+                                <li key={category.id} className='my-3 item-list-sub-category h4' onClick={() => selectCategory(category.name)}>{category.name}</li>
+                            )
+                        })}
                     </ul>
 
                     <div className={formSubCategory}>
                         <section className='d-flex justify-content-around align-items-center'>
                             <p className='m-0 p-sub-categories'>
-                                <strong>Nome categoria escolhida</strong>
+                                <strong>{category}</strong>
                             </p>
                             <button className="btn-callback" onClick={closeFormShowList}>
                                 <strong>Voltar</strong>
                             </button>
                         </section>
 
-                        <form className='my-3'>
+                        <ul className='text-center my-5 list-sub-categories'>
+                            {subCategories.map((subCategory) => {
+                                return (
+                                    <li key={subCategory.id}>{subCategory.name}</li>
+                                )
+                            })}
+                        </ul>
+
+                        <form className='my-3' onSubmit={createSubCategory}>
                             <div className="form-group">
-                                <input type="text" className="input-sub-category w-100" placeholder="Sub categoria" />
+                                <input type="text" value={subCategoryName} onChange={(value) => setSubCategoryName(value.target.value)} className="input-sub-category w-100" placeholder="Sub categoria" />
                             </div>
                             <button type="submit" className="w-100 btn btn-danger btn-sm my-3">cadastrar</button>
                         </form>
