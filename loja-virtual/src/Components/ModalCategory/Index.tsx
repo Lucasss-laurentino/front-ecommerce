@@ -39,10 +39,12 @@ export default function ModalCategory({ modalCategory, setModalCategory, categor
 
             }).then((response) => {
                 setCategories([...response.data]);
+                setCategory('')
+                setImageOne(null)
+                setImageTwo(null)
+                setModalCategory()
             })
 
-        } else {
-            console.log('deu ruim')
         }
 
 

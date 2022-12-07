@@ -61,6 +61,10 @@ export default function ModalSubCategory({ modalSubCategory, setModalSubCategory
 
         http.post('createSubCategory', {category, subCategoryName}).then((response) => {
             setSubCategories([...response.data])
+            setSubCategoryName('')
+            setFormSubCategory('formSubCategory-hiden')
+            setListCategories('list-categories')    
+            setModalSubCategory()
         })
     }
 
