@@ -8,16 +8,17 @@ import SubCategory from '../../Inteface/SubCategory';
 interface Props {
     modalCreateProduct: boolean,
     setModalCreateProduct: () => void,
+    categories: Category[],
 }
 
-export default function ModalCreateProduct({ modalCreateProduct, setModalCreateProduct }: Props) {
+export default function ModalCreateProduct({ modalCreateProduct, setModalCreateProduct, categories }: Props) {
 
+    // Estado de input
     const [name, setName] = useState<string>('');
     const [manufacturer, setManufacturer] = useState<string>('');
     const [price, setPrice] = useState<string>('');
 
-    // Select categoria e sub categoria
-    const [categories, setCategories] = useState<Category[]>([]);
+    // Estado para guardar sub categorias de categoria selecionada no select
     const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
 
     // guardar categoria e sub categoria escolhida
@@ -44,14 +45,6 @@ export default function ModalCreateProduct({ modalCreateProduct, setModalCreateP
     const [imageOne, setImageOne] = useState<File | null>();
     const [imageTwo, setImageTwo] = useState<File | null>();
     const [imageThree, setImageThree] = useState<File | null>();
-
-    useEffect(() => {
-
-        http.get('getCategories').then((response) => {
-            setCategories([...response.data]);
-        })
-
-    }, []);
 
     const selectCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
 

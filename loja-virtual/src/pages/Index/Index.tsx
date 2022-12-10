@@ -46,6 +46,7 @@ export default function Index() {
             <ModalCreateProduct
                 modalCreateProduct={modalCreateProduct}
                 setModalCreateProduct={() => setModalCreateProduct(false)}
+                categories={categories}
             />
 
             <Navbar 

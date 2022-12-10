@@ -29,7 +29,10 @@ export default function ModalSubCategory({ modalSubCategory, setModalSubCategory
     const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
 
     useEffect(() => {
+
         if(category){
+            
+            // Toda vez que clicar em uma categoria...
             http.get(`getSubCategories/${category}`).then((response) => {
                 setSubCategories([...response.data])
             })

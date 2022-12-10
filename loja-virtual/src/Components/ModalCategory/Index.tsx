@@ -13,8 +13,9 @@ interface Props {
 
 export default function ModalCategory({ modalCategory, setModalCategory, categories, setCategories }: Props) {
 
-    const [category, setCategory] = useState<string>('');
-    const [imageOne, setImageOne] = useState<File | null>();
+    // Estados de inputs
+    const [category, setCategory] = useState<string>(''); 
+    const [imageOne, setImageOne] = useState<File | null>()
     const [imageTwo, setImageTwo] = useState<File | null>();
 
     const createCategory = (event: React.FormEvent<HTMLFormElement>) => {
