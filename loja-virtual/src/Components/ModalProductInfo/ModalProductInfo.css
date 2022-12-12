@@ -1,0 +1,47 @@
+.img-product {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+.sizeModal {
+    height: 540px;
+}
+.color {
+    color:  #DB3C46
+}
+
+.input-border {
+    color: #DB3C46;
+    border: none;
+    border-bottom: 1px solid #DB3C46;
+    outline: 0;
+}
+
+.btn-calcular {
+    width: 100%;
+    padding: 1px;
+    color: white;
+    border: 1px solid #DB3C46;
+    background-color: #DB3C46;
+    border-radius: 7px;
+}
+
+.btn-calcular:hover {
+    color: #DB3C46;
+    background-color: white;
+    cursor: pointer;
+}
+
+.btn-cart {
+    padding: 5px;
+    color: white;
+    background-color: #DB3C46;
+    border: 1px solid #DB3C46;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.images {
+    width: 60%;
+}

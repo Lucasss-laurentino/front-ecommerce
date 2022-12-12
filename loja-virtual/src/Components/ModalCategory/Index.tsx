@@ -9,9 +9,11 @@ interface Props {
     setModalCategory: () => void,
     categories: Category[],
     setCategories: (categories: Category[]) => void,
+    setBanner1: (path: string) => void,
+    setBanner2: (path: string) => void,
 }
 
-export default function ModalCategory({ modalCategory, setModalCategory, categories, setCategories }: Props) {
+export default function ModalCategory({ modalCategory, setModalCategory, categories, setCategories, setBanner1, setBanner2 }: Props) {
 
     // Estados de inputs
     const [category, setCategory] = useState<string>(''); 
@@ -39,7 +41,9 @@ export default function ModalCategory({ modalCategory, setModalCategory, categor
                 data: formData,
 
             }).then((response) => {
-                setCategories([...response.data]);
+                setCategories([...response.data[1]]);
+                setBanner1('http://localhost:8000/storage/'+response.data[0].banner1)
+                setBanner2('http://localhost:8000/storage/'+response.data[0].banner2)
                 setCategory('')
                 setImageOne(null)
                 setImageTwo(null)

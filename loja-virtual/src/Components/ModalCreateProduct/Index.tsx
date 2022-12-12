@@ -1,17 +1,19 @@
 import './ModalCreateProduct.css';
 import Modal from 'react-bootstrap/Modal';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Category from '../../Inteface/Category';
 import http from '../../http/http';
 import SubCategory from '../../Inteface/SubCategory';
+import Products from '../../Inteface/Product';
 
 interface Props {
     modalCreateProduct: boolean,
     setModalCreateProduct: () => void,
     categories: Category[],
+    setProducts: (products: Products[]) => void, 
 }
 
-export default function ModalCreateProduct({ modalCreateProduct, setModalCreateProduct, categories }: Props) {
+export default function ModalCreateProduct({ modalCreateProduct, setModalCreateProduct, categories, setProducts }: Props) {
 
     // Estado de input
     const [name, setName] = useState<string>('');
@@ -49,6 +51,7 @@ export default function ModalCreateProduct({ modalCreateProduct, setModalCreateP
     const selectCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
 
         // Selecionar sub categorias para exibir no select de sub categorias de acordo com a categoria escolhida
+        
         http.get(`getSubCategories/${event.target.value}`).then((response) => {
             setSubCategories([...response.data])
         })
@@ -180,7 +183,25 @@ export default function ModalCreateProduct({ modalCreateProduct, setModalCreateP
                 },
                 data: formData,
             }).then(response => {
-                console.log(response.data)
+                setModalCreateProduct();
+                setName('')
+                setManufacturer('')
+                setPrice('')
+                setCategory('Selecione uma categoria')
+                setSubCategory('Selecione uma sub categoria')
+                setSizeP(false)
+                setSizeM(false)
+                setSizeG(false)
+                setSizeGG(false)
+                setQtdP('')
+                setQtdM('')
+                setQtdG('')
+                setQtdGG('')
+                setImageOne(null)
+                setImageTwo(null)
+                setImageThree(null)
+
+                setProducts([...response.data[0]])
             })
 
         }

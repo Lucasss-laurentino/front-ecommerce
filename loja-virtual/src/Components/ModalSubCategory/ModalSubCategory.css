@@ -30,8 +30,10 @@
 
 }
 .input-sub-category {
+    color: #DB3C46;
     border: none;
     border-bottom: 1px solid #DB3C46;
+    outline: 0;
 }
 
 .input-sub-category::placeholder {

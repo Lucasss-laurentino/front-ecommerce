@@ -1,31 +1,39 @@
+import { useEffect } from 'react';
+import http from '../../http/http';
+import Products from '../../Inteface/Product';
 import './CardProduct.css';
-import imageTeste from './products/teste.webp';
 
-export default function CardProduct() {
+interface Props {
+    product: Products | undefined,
+    urlImage: string,
+    setModalProductInfo: () => void,
+    setProductInfo: (product: Products) => void,
+}
 
+export default function CardProduct({ product, urlImage, setModalProductInfo, setProductInfo }: Props) {
+
+    const sendProductInfo = (product: Products | undefined) => {
+        if (product) {
+            setProductInfo(product)
+            setModalProductInfo()
+        }
+    }
 
     return (
-
         <>
-        <div className="col-6 col-md-4 p-0 d-flex justify-content-center align-items-stretch mx-1 col-height">
-                <div className="card text-center mb-3 card-product card-size my-3"> {/* width 100% */}
-                    <div className="ratio ratio-1x1">
-                        <img className="card-img-top" src={imageTeste} alt="Card image cap" />
-                        </div>
-                    <div className="card-body">
-                        <p className="card-title">Vestido longo</p>
-                        <p className="card-text">R$ 230.00</p>
-                    </div>
-                    <div className="background-button-product">
-                        <a href="#" className="btn btn-sm py-2 text-white"><strong>Ver produto</strong></a>
-                    </div>
+            <div className="card text-center mb-3 card-product card-size my-3"> {/* width 100% */}
+                <div className="ratio ratio-1x1">
+                    <img className="card-img-top" src={urlImage + product?.imageOne} alt="Card image cap" />
                 </div>
-        </div>
+                <div className="card-body">
+                    <p className="card-title color">{product?.name}</p>
+                    <p className="card-text color">R$ {product?.price} </p>
+                </div>
+                <div className="background-button-product">
+                    <a href="#" className="btn btn-sm py-2 text-white" onClick={() => sendProductInfo(product)}><strong>Ver produto</strong></a>
+                </div>
+            </div>
+
         </>
-
-
-
     )
-
-
 }

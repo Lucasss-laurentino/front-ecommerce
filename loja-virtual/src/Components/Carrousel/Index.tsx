@@ -1,16 +1,16 @@
 import './Carrousel.css';
 import Carousel from 'react-bootstrap/Carousel';
-import Banner1 from './img/Banner1.png';
-import Banner2 from './img/Banner2.png';
 
 interface Props {
     menuHidden: string,
     setModalCategory: () => void,
     setModalSubCategory: () => void,
     setModalCreateProduct: () => void,
+    banner1: string,
+    banner2: string,
 }
 
-export default function Carrousel({menuHidden, setModalCategory, setModalSubCategory, setModalCreateProduct}: Props) {
+export default function Carrousel({menuHidden, setModalCategory, setModalSubCategory, setModalCreateProduct, banner1, banner2}: Props) {
 
     return (
 
@@ -39,18 +39,17 @@ export default function Carrousel({menuHidden, setModalCategory, setModalSubCate
 
                 </ul>
             </div>
-
             <Carousel>
                 <Carousel.Item>
                     <img
                         className="d-block img-fluid size-image"
-                        src={Banner1}
+                        src={banner1}
                         alt="First slide" />
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
                         className="d-block img-fluid size-image"
-                        src={Banner2}
+                        src={banner2}
                         alt="Third slide" />
                 </Carousel.Item>
             </Carousel>
