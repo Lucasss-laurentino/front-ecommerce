@@ -2,6 +2,14 @@ import './ModalProductInfo.css';
 import Modal from 'react-bootstrap/Modal';
 import Products from '../../Inteface/Product';
 import Carousel from 'react-bootstrap/Carousel';
+import { useEffect, useState } from 'react';
+import http from '../../http/http';
+import Size from '../../Inteface/Size';
+import {
+    calcularPrecoPrazo,
+    consultarCep,
+    rastrearEncomendas,
+  } from 'correios-brasil';
 
 interface Props {
     modalProductInfo: boolean,
@@ -12,6 +20,54 @@ interface Props {
 
 export default function ModalProductInfo({ modalProductInfo, setModalProductInfo, productInfo, urlImage }: Props) {
 
+    const [sizes, setSizes] = useState<Size[]>([]);
+    const [cep, setCep] = useState<string>('');
+    const [priceFrete, setPriceFrete] = useState<string>('');
+
+    useEffect(() => {
+
+        if(productInfo) {
+            http.get('getSizeThisProduct/'+productInfo.id).then((response) => {
+                setSizes([...response.data])
+            })
+        }
+
+    }, [productInfo])
+
+    const calc = () => {
+
+
+        let args = {
+            sCepOrigem: '01153 000',
+            sCepDestino: cep,
+            nVlPeso: '1',
+            nCdFormato: '1',
+            nVlComprimento: '20',
+            nVlAltura: '20',
+            nVlLargura: '20',
+            nVlDiametro: '0',
+            nCdServico: '04014',
+            nCdEmpresa: '',
+            sDsSenha: '',
+            sCdMaoPropria: 'n',
+            nVlValorDeclarado: '0',
+            sCdAvisoRecebimento: 'n',
+            StrRetorno: 'xml',
+            nIndicaCalculo: '3',
+        };
+
+          http.post('getPriceCor', {args}).then((response) => {
+            setPriceFrete(response.data.cServico.Valor)
+          })
+
+    }
+
+    const closeModal = () => {
+        setCep('')
+        setPriceFrete('');
+        setModalProductInfo();
+    }
+
     return (
         <Modal
             show={modalProductInfo}
@@ -20,32 +76,32 @@ export default function ModalProductInfo({ modalProductInfo, setModalProductInfo
             centered
 
         >
-            <Modal.Header closeButton onHide={setModalProductInfo} className='border border-white'>
+            <Modal.Header closeButton onHide={closeModal} className='border border-white'>
                 <Modal.Title id="contained-modal-title-vcenter">
                     <h5 className='color'>{productInfo?.name}</h5>
                 </Modal.Title>
             </Modal.Header >
             <Modal.Body className='p-0'>
-                <div className="row m-0">
-                    <div className="col-12 col-lg-7 col-md-6 col-sm-6">
+                <div className="row m-0 justify-content-center">
+                    <div className="col-8 col-lg-7 col-md-6 col-sm-6">
                         <Carousel>
                             <Carousel.Item>
                                 <img
-                                    className="d-block img-fluid"
+                                    className="d-block img-fluid tam"
                                     src={urlImage + productInfo?.imageOne}
                                     alt="First slide"
                                 />
                             </Carousel.Item>
                             <Carousel.Item>
                                 <img
-                                    className="d-block img-fluid"
+                                    className="d-block img-fluid tam"
                                     src={urlImage + productInfo?.imageTwo}
                                     alt="Second slide"
 
                                 />
 
                             </Carousel.Item>
-                            {productInfo?.imageThree ? <Carousel.Item> <img className="d-block w-100" src={urlImage + productInfo?.imageThree} alt="Third slide" /></Carousel.Item> : ''}
+                            {productInfo?.imageThree ? <Carousel.Item> <img className="d-block img-fluid tam" src={urlImage + productInfo?.imageThree} alt="Third slide" /></Carousel.Item> : ''}
                         </Carousel>
                     </div>
 
@@ -54,16 +110,21 @@ export default function ModalProductInfo({ modalProductInfo, setModalProductInfo
                             <div className="container">
                                 <h5 className='color'>R$ {productInfo?.price}</h5>
                                 <div className="container d-flex align-items-center p-0 my-2">
-                                    <p className="text-muted d-flex mb-2">Preço</p>
-                                    <p className="color h5 mx-2 border rounded-circle py-0 px-2">P</p>
-                                    <p className="color h5 mx-2 border rounded-circle py-0 px-2">M</p>
-                                    <p className="color h5 mx-2 border rounded-circle py-0 px-2">G</p>
+                                    <p className="text-muted d-flex mb-2">Tamanhos</p>
+                                    {sizes.map((size) => {
+                                        return (
+                                            <p key={size.id} className="color h5 mx-2 border rounded-circle py-0 px-2">{size.size}</p>        
+                                        )
+                                    })}
                                 </div>
                                 <div className="container p-0 my-3 border border-muted p-2">
                                     <p className="h6 color">Calcule o frete e o prazo</p>
                                     <form action="">
-                                        <input type="text" className='input-border mb-2 w-100' placeholder='Digite seu cep' />
-                                        <button className='btn-calcular'>Calcular</button>
+                                        <input type="text" className='input-border mb-2 w-100' value={cep} onChange={(value) => setCep(value.target.value)} placeholder='Digite seu cep' />
+                                        <button type='button' className='btn-calcular' onClick={calc}>Calcular</button>
+
+                                        <p className="m-0 mt-2 text-center text-danger">{priceFrete ? 'R$ '+priceFrete : ''}</p>
+                         
                                     </form>
                                 </div>
                                 <div className="container p-0 my-4 d-flex justify-content-center">

@@ -32,6 +32,7 @@ export default function ListCategory({categories, setCategories, setBanner1, set
         })
 
         setBanner(category)
+
     }
 
     return (

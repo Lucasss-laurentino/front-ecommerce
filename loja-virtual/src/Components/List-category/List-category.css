@@ -6,3 +6,7 @@
 .font-list {
     color: #F86666;
 }
+.font-list:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

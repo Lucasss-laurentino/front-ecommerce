@@ -1,5 +1,7 @@
 import './Carrousel.css';
 import Carousel from 'react-bootstrap/Carousel';
+import { useEffect, useState } from 'react';
+import Category from '../../Inteface/Category';
 
 interface Props {
     menuHidden: string,
@@ -42,13 +44,13 @@ export default function Carrousel({menuHidden, setModalCategory, setModalSubCate
             <Carousel>
                 <Carousel.Item>
                     <img
-                        className="d-block img-fluid size-image"
+                        className='d-block img-fluid size-image'
                         src={banner1}
                         alt="First slide" />
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
-                        className="d-block img-fluid size-image"
+                        className='d-block img-fluid size-image'
                         src={banner2}
                         alt="Third slide" />
                 </Carousel.Item>

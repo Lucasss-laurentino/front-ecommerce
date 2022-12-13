@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import http from '../../http/http';
 import Products from '../../Inteface/Product';
 import './CardProduct.css';
 
@@ -21,7 +19,7 @@ export default function CardProduct({ product, urlImage, setModalProductInfo, se
 
     return (
         <>
-            <div className="card text-center mb-3 card-product card-size my-3"> {/* width 100% */}
+            <div className="card text-center mb-3 card-product card-size my-3 border border-white">
                 <div className="ratio ratio-1x1">
                     <img className="card-img-top" src={urlImage + product?.imageOne} alt="Card image cap" />
                 </div>

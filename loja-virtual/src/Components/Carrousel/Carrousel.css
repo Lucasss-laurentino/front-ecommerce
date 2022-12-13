@@ -1,6 +1,24 @@
 .size-image {
     width: 100%;
-    max-height: 500px;
+    max-height: 400px;
+}
+
+.effect {
+
+    animation-name: effectshow;
+    animation-duration: 1s;
+
+}
+@keyframes effectshow {
+    0% {
+        opacity: 0.0;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 0.8;
+    }
 }
 
 /* classe usada no state pra esconder o menu */

@@ -3,6 +3,12 @@
     color: #F86666;
     letter-spacing: 2px;
 }
+.font:hover {
+    font-size: 23px;
+    color: #F86666;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
 
 .menu-items-list {
     width: 40%;

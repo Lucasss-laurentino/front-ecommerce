@@ -1,5 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react';
-import CardProduct from '../../Components/Card-product/Index';
+import { useEffect, useState } from 'react';
 import Carrousel from '../../Components/Carrousel/Index';
 import Footer from '../../Components/Footer/Index';
 import ListCategory from '../../Components/List-category/Index';
