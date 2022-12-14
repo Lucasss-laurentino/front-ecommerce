@@ -8,7 +8,7 @@ interface Props {
     setProductInfo: (product: Products) => void,
 }
 
-export default function CardProduct({ product, urlImage, setModalProductInfo, setProductInfo }: Props) {
+export default function CardProduct({ product, urlImage, setModalProductInfo, setProductInfo}: Props) {
 
     const sendProductInfo = (product: Products | undefined) => {
         if (product) {
@@ -19,7 +19,7 @@ export default function CardProduct({ product, urlImage, setModalProductInfo, se
 
     return (
         <>
-            <div className="card text-center mb-3 card-product card-size my-3 border border-white">
+            <div className="card col-8 col-sm-5 col-lg-4 text-center mb-3 card-product my-3 border border-white">
                 <div className="ratio ratio-1x1">
                     <img className="card-img-top" src={urlImage + product?.imageOne} alt="Card image cap" />
                 </div>

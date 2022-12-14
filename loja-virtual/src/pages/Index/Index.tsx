@@ -51,6 +51,8 @@ export default function Index() {
     // Products
     const [products, setProducts] = useState<Products[]>([]);
 
+    const [productsThisCategory, setProductsThisCategory] = useState<Products[]>([]);
+
     useEffect(() => {
 
         http.get('getCategoryDefault').then((response) => {
@@ -92,6 +94,7 @@ export default function Index() {
                 setModalCreateProduct={() => setModalCreateProduct(false)}
                 categories={categories}
                 setProducts={(products: Products[]) => setProducts(products)}
+                setProductsThisCategory={(products) => setProductsThisCategory(products)}
             />
 
             <ModalProductInfo
@@ -131,6 +134,8 @@ export default function Index() {
                         urlImage={urlImage}
                         setModalProductInfo={() => setModalProductInfo(true)}
                         setProductInfo={(product) => setProductInfo(product)}
+                        setProductsThisCategory={(products) => setProductsThisCategory(products)}
+                        productsThisCategory={productsThisCategory}
                     />    
                     )
                 })}

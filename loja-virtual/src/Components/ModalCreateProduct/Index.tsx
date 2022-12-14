@@ -11,9 +11,10 @@ interface Props {
     setModalCreateProduct: () => void,
     categories: Category[],
     setProducts: (products: Products[]) => void, 
+    setProductsThisCategory: (products: Products[]) => void,
 }
 
-export default function ModalCreateProduct({ modalCreateProduct, setModalCreateProduct, categories, setProducts }: Props) {
+export default function ModalCreateProduct({ modalCreateProduct, setModalCreateProduct, categories, setProducts, setProductsThisCategory }: Props) {
 
     // Estado de input
     const [name, setName] = useState<string>('');
@@ -202,6 +203,7 @@ export default function ModalCreateProduct({ modalCreateProduct, setModalCreateP
                 setImageThree(null)
 
                 setProducts([...response.data[0]])
+                setProductsThisCategory([...response.data[0]]);
             })
 
         }

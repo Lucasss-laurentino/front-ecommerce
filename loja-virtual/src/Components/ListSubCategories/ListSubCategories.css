@@ -1,0 +1,41 @@
+.roll {
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+}
+
+
+.roll::-webkit-scrollbar{
+    overflow-y: scroll ;
+    display: none;
+}
+.container-btn-scroll-vertical {
+    display: flex;
+    align-self: center;
+    position: absolute;
+}
+
+.btn-left-vertical-hiden {
+    background-color: rgba(000, 000, 000, 0.0);
+    border: none;
+    opacity: 0.0;
+    z-index: -2;
+}
+
+.btn-left-vertical-show {
+    background-color: rgba(000, 000, 000, 0.0);
+    border: none;
+    opacity: 0.9;
+    z-index: 10;
+    animation: show 0.51s ease-out alternate;
+}
+@keyframes show {
+    0%{
+        opacity: 0.0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0.9;
+    }
+}
