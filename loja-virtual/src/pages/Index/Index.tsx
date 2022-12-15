@@ -126,9 +126,9 @@ export default function Index() {
                 setSubCategories={(subCategories) => setSubCategories(subCategories)}
             />
 
-                {subCategories.map((subCategory) => {
-                    return (
-                        <ListSubCategories
+            {subCategories.map((subCategory) => {
+                return (
+                    <ListSubCategories
                         key={subCategory.id}
                         subCategory={subCategory}
                         urlImage={urlImage}
@@ -136,9 +136,9 @@ export default function Index() {
                         setProductInfo={(product) => setProductInfo(product)}
                         setProductsThisCategory={(products) => setProductsThisCategory(products)}
                         productsThisCategory={productsThisCategory}
-                    />    
-                    )
-                })}
+                    />
+                )
+            })}
 
             <Footer />
 

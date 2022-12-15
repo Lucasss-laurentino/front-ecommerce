@@ -8,7 +8,14 @@
     height: 540px;
 }
 .color {
-    color:  #DB3C46
+    color:  #DB3C46;
+    cursor: pointer;
+}
+
+.onClickedSize {
+    color: white;
+    background-color: #DB3C46;
+    cursor: pointer;
 }
 
 .input-border {
