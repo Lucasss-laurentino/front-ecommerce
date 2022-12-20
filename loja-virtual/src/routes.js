@@ -1,5 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Index from './pages/Index/Index';
+import IndexCart from './pages/Cart/Index'
+import Navbar from './Components/Navbar/Index';
 
 
 export default function AppRouter() {
@@ -8,6 +10,10 @@ export default function AppRouter() {
         <Router>
             <Routes>
                 <Route path='/' element={<Index />} />
+                <Route path='/' element={<Navbar />}>
+                </Route>
+                <Route path='/cart/:id' element={<IndexCart />} />
+
             </Routes>
         </Router>
     )

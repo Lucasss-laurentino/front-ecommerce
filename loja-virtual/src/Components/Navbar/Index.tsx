@@ -1,3 +1,4 @@
+import { Link, Outlet } from 'react-router-dom';
 import './Navbar.css';
 
 interface Props {
@@ -16,15 +17,15 @@ export default function Navbar({menuHidden, setMenuHidden}: Props) {
     }
 
     return (
-        <nav className="navbar navbar-expand-sm my-3 p-0">
+        <><nav className="navbar navbar-expand-sm my-3 p-0">
 
             <div className="container justify-content-sm-start mx-4">
-                <a className="text-decoration-none font d-flex align-items-center">
+                <Link to='/' className="text-decoration-none font d-flex align-items-center">
                     Coisas de mulher
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-handbag-fill" viewBox="0 0 16 16">
                         <path d="M8 1a2 2 0 0 0-2 2v2H5V3a3 3 0 1 1 6 0v2h-1V3a2 2 0 0 0-2-2zM5 5H3.36a1.5 1.5 0 0 0-1.483 1.277L.85 13.13A2.5 2.5 0 0 0 3.322 16h9.355a2.5 2.5 0 0 0 2.473-2.87l-1.028-6.853A1.5 1.5 0 0 0 12.64 5H11v1.5a.5.5 0 0 1-1 0V5H6v1.5a.5.5 0 0 1-1 0V5z" />
                     </svg>
-                </a>
+                </Link>
                 <button className="navbar-toggler" id="collapse-menu" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -40,11 +41,11 @@ export default function Navbar({menuHidden, setMenuHidden}: Props) {
                         </a>
                     </li>
                     <li className="list-inline-item">
-                        <a className="nav-link d-flex align-items-center items-menu justify-content-center" href="#">
+                        <Link to='/cart/1' className="nav-link d-flex align-items-center items-menu justify-content-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cart3" viewBox="0 0 16 16">
                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                             </svg>
-                        </a>
+                        </Link>
                     </li>
                     <li className="list-inline-item">
                         <div className="container-flui w-100 d-flex justify-content-center">
@@ -57,6 +58,6 @@ export default function Navbar({menuHidden, setMenuHidden}: Props) {
                     </li>
                 </ul>
             </div>
-        </nav>
+        </nav><Outlet /></>
     )
 }
