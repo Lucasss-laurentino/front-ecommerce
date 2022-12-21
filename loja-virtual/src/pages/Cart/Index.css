@@ -1,3 +1,27 @@
+.btn-menos {
+    color: #DB3C46;
+    background-color: white;
+    border: none;
+}
+.quantity {
+    color: #DB3C46;
+    font-size: 20px;
+}
+
+.btn-mais {
+    color: #DB3C46;
+    background-color: white;
+    border: none;
+}
+
+.btn-trash-product-cart {
+
+    color: #DB3C46;
+    background-color: white;
+    border: 1px solid #DB3C46;
+
+}
+
 .roll-y {
     max-height: 90vh;
     overflow: auto;

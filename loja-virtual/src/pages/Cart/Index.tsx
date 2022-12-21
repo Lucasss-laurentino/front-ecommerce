@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Quantity from '../../Components/Quantity/Index';
 import http from '../../http/http';
 import Products from '../../Inteface/Product';
 import './Index.css';
 
 export default function IndexCart() {
-    
+
     const [productsCart, setProductsCart] = useState<Products[][]>([]);
-    const [productsChecked, setProductsChecked] = useState<Products[]>([]);
     const [total, setTotal] = useState<number>(0);
+    const [classQuantity, setClassQuantity] = useState<string>('d-none justify-content-around my-2');
 
     useEffect(() => {
         http.get('getProductsThisUser/1').then((response) => {
-
-            setProductsCart(response.data);
-        
+            if(response.data != 'false'){
+                setProductsCart(response.data);
+            }
         });
 
     }, []);
@@ -23,20 +24,38 @@ export default function IndexCart() {
     const selectProducts = (product: Products) => {
 
         var element = document.getElementById(product.name);
+        var quantity = document.getElementById('produto'+product.id);
 
-        if(element?.getAttribute('checked')){
+        if (element?.getAttribute('checked')) {
 
             element.removeAttribute('checked');
+
+            quantity?.setAttribute('class', 'd-none justify-content-around my-2');
+            
             setTotal(total - parseFloat(product.price));
-        
+
         } else {
 
             element?.setAttribute('checked', 'checked');
-            setTotal(total + parseFloat(product.price));
+                        
+            quantity?.setAttribute('class', 'd-flex justify-content-around my-2');
             
+            setTotal(total + parseFloat(product.price));
+
         }
 
     }
+
+    const deleteItemCart = (product: Products) => {
+        http.delete('deleteItemCart/'+product.id).then((response) => {
+            http.get('getProductsThisUser/1').then((response) => {
+                console.log(response.data)
+                setProductsCart(response.data);
+    
+            });
+        });
+    }
+
 
     return (
         <section className="h-100 h-custom mt-1 ">
@@ -45,30 +64,33 @@ export default function IndexCart() {
                     <div className="col">
                         <div className="card border border-white">
                             <div className="card-body p-4">
-
                                 <div className="row">
-
                                     <div className="col-lg-7 roll-y my-3">
                                         <h5 className="mb-3"><Link to="/" className="color">Voltar</Link></h5>
                                         <hr className='text-danger' />
-
-                                        <div className="d-flex justify-content-between align-items-center mb-4">
+                                       <div className="d-flex justify-content-between align-items-center mb-4">
                                             <div>
                                                 <p className="mb-1 color">Carrinho de compras</p>
                                                 <p className="mb-0 color">Você tem {productsCart.length} items em seu carrinho</p>
                                             </div>
                                         </div>
-
                                         {productsCart.map((productCart) => {
                                             return (
                                                 <div className="card-border mb-3" key={productCart[0]['id']}>
                                                     <div className="card-body">
+                                                        <div className="d-flex justify-content-end align-items-center">
+                                                            <button className='btn-trash-product-cart' onClick={() => deleteItemCart(productCart[0])}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
                                                         <div className="d-flex justify-content-between">
-                                                            <input type="checkbox" name={productCart[0]['name']} className='m-2' id={productCart[0]['name']} onClick={() => selectProducts(productCart[0])}/>
+                                                            <input type="checkbox" name={productCart[0]['name']} className='m-2' id={productCart[0]['name']} onClick={() => selectProducts(productCart[0])} />
                                                             <div className="d-flex color flex-row align-items-center col-7 col-lg-6 col-sm-5 col-md-4">
                                                                 <div>
                                                                     <img
-                                                                        src={"http://127.0.0.1:8000/storage/"+productCart[0]['imageOne']}
+                                                                        src={"http://127.0.0.1:8000/storage/" + productCart[0]['imageOne']}
                                                                         className="img-fluid rounded-3 wid" alt="Shopping item" />
                                                                 </div>
                                                                 <div className="ms-3">
@@ -78,6 +100,13 @@ export default function IndexCart() {
                                                             <div className="d-flex justify-content-end flex-row align-items-center col-3 col-lg-3 col-sm-3 col-md-4">
                                                                 <div className=''>
                                                                     <h5 className='mb-0 color responsive'>R$:{productCart[0]['price']}</h5>
+
+                                                                    <Quantity
+                                                                        total={total}
+                                                                        setTotal={(total) =>  setTotal(total)}
+                                                                        productCart={productCart[0]}
+                                                                        classQuantity={classQuantity}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -85,12 +114,8 @@ export default function IndexCart() {
                                                 </div>
                                             );
                                         })}
-
                                     </div>
-
-
                                     <div className="col-lg-5">
-
                                         <div className="back text-white rounded-3">
                                             <div className="card-body">
                                                 <div className="d-flex justify-content-between align-items-center mb-0">
