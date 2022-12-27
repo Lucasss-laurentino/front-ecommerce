@@ -5,6 +5,7 @@ import ListCategory from '../../Components/List-category/Index';
 import ListSubCategories from '../../Components/ListSubCategories/Index';
 import ModalCategory from '../../Components/ModalCategory/Index';
 import ModalCreateProduct from '../../Components/ModalCreateProduct/Index';
+import ModalLogin from '../../Components/ModalLogin';
 import ModalProductInfo from '../../Components/ModalProductInfo/Index';
 import ModalSubCategory from '../../Components/ModalSubCategory/Index';
 import Navbar from '../../Components/Navbar/Index';
@@ -19,6 +20,9 @@ export default function Index() {
 
     // esconder ou mostrar menu para cadastrar categoria, sub categoria e produto
     const [menuHidden, setMenuHidden] = useState<string>('hidden');
+
+    // Modal login
+    const [modalLogin, setModalLogin] = useState<boolean>(false);
 
     // Modal categoria
     const [modalCategory, setModalCategory] = useState<boolean>(false);
@@ -53,6 +57,8 @@ export default function Index() {
 
     const [productsThisCategory, setProductsThisCategory] = useState<Products[]>([]);
 
+    const [logado, setLogado] = useState<boolean>(false);
+
     useEffect(() => {
 
         http.get('getCategoryDefault').then((response) => {
@@ -73,6 +79,12 @@ export default function Index() {
 
     return (
         <>
+
+            <ModalLogin
+                modalLogin={modalLogin}
+                setModalLogin={() => setModalLogin(false)}
+
+            />
 
             <ModalCategory
                 modalCategory={modalCategory}
@@ -107,6 +119,9 @@ export default function Index() {
             <Navbar
                 menuHidden={menuHidden}
                 setMenuHidden={(classe) => setMenuHidden(classe)}
+                setModalLogin={() => setModalLogin(true)}
+                logado={logado}
+                setLogado={setLogado}
             />
 
             <Carrousel

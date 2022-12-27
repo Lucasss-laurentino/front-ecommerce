@@ -114,23 +114,27 @@ export default function ModalProductInfo({ modalProductInfo, setModalProductInfo
 
     const adcProductToCart = () => {
 
-        if(sizeSelected) {
-            const userId = 1;
-            http.post('addToCart', {productInfo, sizeSelected, userId}).then((response) => {
-                if(response.data === false) {
-                    setCreate('')
-                    setError('Você já possui esse produto no seu carrinho');
-                } else {
-                    setError('');
-                    setCreate('Produto adicionar no carrinho')    
-                }
-                
-            })
-
+        if(localStorage.getItem('user')) {
+            if(sizeSelected) {
+                const userId = 1;
+                http.post('addToCart', {productInfo, sizeSelected, userId}).then((response) => {
+                    if(response.data === false) {
+                        setCreate('')
+                        setError('Você já possui esse produto no seu carrinho');
+                    } else {
+                        setError('');
+                        setCreate('Produto adicionar no carrinho')    
+                    }
+                    
+                })
+    
+            } else {
+    
+                setError('Selecione um tamanho');
+    
+            }    
         } else {
-
-            setError('Selecione um tamanho');
-
+            setError('Você precisa efetuar login antes de adicionar um produto ao carrinho')
         }
 
     }

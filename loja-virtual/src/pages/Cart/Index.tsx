@@ -47,6 +47,13 @@ export default function IndexCart() {
     }
 
     const deleteItemCart = (product: Products) => {
+
+        var element = document.getElementById(product.name);
+
+        if(element?.getAttribute('checked')){
+            setTotal(total - parseFloat(product.price));
+        }
+
         http.delete('deleteItemCart/'+product.id).then((response) => {
             http.get('getProductsThisUser/1').then((response) => {
                 console.log(response.data)

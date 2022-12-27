@@ -1,0 +1,32 @@
+.back {
+    border: none;
+    color: white;
+}
+.coloor {
+    color: #F86666;
+}
+.createUser {
+    color: #F86666;
+    text-decoration: underline;
+    border: none;
+    background-color: white;
+}
+.button-redes {
+
+    background-color: white;
+    border: none;
+}
+.button-redes:hover {
+    letter-spacing: 2px;
+    transition-duration: 1s;
+}
+
+.inputL {
+    color: #F86666;
+    border: none;
+    border-bottom: 2px solid #F86666;
+    outline: 0;
+}
+.inputL::placeholder{
+    color: #F86666;
+}
