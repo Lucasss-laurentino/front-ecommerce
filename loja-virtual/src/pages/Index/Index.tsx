@@ -3,6 +3,7 @@ import Carrousel from '../../Components/Carrousel/Index';
 import Footer from '../../Components/Footer/Index';
 import ListCategory from '../../Components/List-category/Index';
 import ListSubCategories from '../../Components/ListSubCategories/Index';
+import ModalAddress from '../../Components/ModalAddress';
 import ModalCategory from '../../Components/ModalCategory/Index';
 import ModalCreateProduct from '../../Components/ModalCreateProduct/Index';
 import ModalLogin from '../../Components/ModalLogin';
@@ -10,6 +11,7 @@ import ModalProductInfo from '../../Components/ModalProductInfo/Index';
 import ModalSubCategory from '../../Components/ModalSubCategory/Index';
 import Navbar from '../../Components/Navbar/Index';
 import http from '../../http/http';
+import Address from '../../Inteface/Address';
 import Category from '../../Inteface/Category';
 import Products from '../../Inteface/Product';
 import SubCategory from '../../Inteface/SubCategory';
@@ -36,6 +38,9 @@ export default function Index() {
     // Modal Product Info
     const [modalProductInfo, setModalProductInfo] = useState<boolean>(false);
     const [productInfo, setProductInfo] = useState<Products>();
+
+    // Modal Address
+    const [modalAddress, setModalAddress] = useState<boolean>(false);
 
     // Categories
     const [categories, setCategories] = useState<Category[]>([]);
@@ -116,12 +121,19 @@ export default function Index() {
                 urlImage={urlImage}
             />
 
+            <ModalAddress
+                modalAddress={modalAddress}
+                setModalAddress={() => setModalAddress(false)}
+            />
+
             <Navbar
                 menuHidden={menuHidden}
                 setMenuHidden={(classe) => setMenuHidden(classe)}
                 setModalLogin={() => setModalLogin(true)}
                 logado={logado}
                 setLogado={setLogado}
+                modalAddress={modalAddress}
+                setModalAddress={() => setModalAddress(true)}
             />
 
             <Carrousel
@@ -142,6 +154,9 @@ export default function Index() {
             />
 
             {subCategories.map((subCategory) => {
+                
+                {/* card products dentro de list sub categories  */}
+
                 return (
                     <ListSubCategories
                         key={subCategory.id}

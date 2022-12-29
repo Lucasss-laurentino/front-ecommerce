@@ -1,0 +1,26 @@
+.input-address {
+    border: none;
+    border-bottom: 2px solid #F86666;
+    outline: 0;
+    color: #F86666;
+}
+.input-address::placeholder {
+    color:  #F86666;
+
+}
+
+.btn-create-address {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    background-color: #F86666;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 6px;
+    width: 20%;
+}
+.btn-create-address:hover {
+    border: 1px solid #F86666;
+    background-color: white;
+    color: #F86666;
+}

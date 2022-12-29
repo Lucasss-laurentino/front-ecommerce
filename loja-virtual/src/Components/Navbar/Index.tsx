@@ -8,9 +8,11 @@ interface Props {
     setModalLogin: () => void,
     logado: boolean,
     setLogado: (bool: boolean) => void,
+    modalAddress: boolean,
+    setModalAddress: () => void,
 }
 
-export default function Navbar({ menuHidden, setMenuHidden, setModalLogin, logado, setLogado }: Props) {
+export default function Navbar({ menuHidden, setMenuHidden, setModalLogin, logado, setLogado, modalAddress, setModalAddress }: Props) {
 
 
     useEffect(() => {
@@ -70,7 +72,7 @@ export default function Navbar({ menuHidden, setMenuHidden, setModalLogin, logad
                                         </svg>
                                     </a>
                                 </li>
-                                <li className="list-inline-item mx-0">
+                                <li className="list-inline-item mx-0" onClick={setModalAddress}>
                                     <a className="nav-link d-flex align-items-center items-menu justify-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-geo-alt mx-2" viewBox="0 0 16 16">
                                             <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
@@ -79,12 +81,13 @@ export default function Navbar({ menuHidden, setMenuHidden, setModalLogin, logad
                                     </a>
                                 </li>
                                 <li className="list-inline-item">
-                                    <Link to={'/cart/'+localStorage.getItem('user')} className="nav-link d-flex align-items-center items-menu justify-content-center">
+                                    <Link to={'/cart'} className="nav-link d-flex align-items-center items-menu justify-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-cart3 mx-2" viewBox="0 0 16 16">
                                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                                         </svg>
                                     </Link>
                                 </li>
+                                {localStorage.getItem('adm') ? 
                                 <li className="list-inline-item">
                                     <div className="container-flui w-100 d-flex justify-content-center">
                                         <button className="nav-link d-flex align-items-center items-menu justify-content-center border border-white bg-white" onClick={showOrHiddenMenu}>
@@ -94,6 +97,7 @@ export default function Navbar({ menuHidden, setMenuHidden, setModalLogin, logad
                                         </button>
                                     </div>
                                 </li>
+                                : '' }
                                 <li className="list-inline-item mx-0">
                                     <button className="nav-link btn-link d-flex align-items-center items-menu justify-content-center" onClick={logout}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-box-arrow-right mx-2" viewBox="0 0 16 16">

@@ -12,7 +12,7 @@ export default function AppRouter() {
                 <Route path='/' element={<Index />} />
                 <Route path='/' element={<Navbar />}>
                 </Route>
-                <Route path='/cart/:id' element={<IndexCart />} />
+                <Route path='/cart' element={<IndexCart />} />
 
             </Routes>
         </Router>

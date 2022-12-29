@@ -116,13 +116,14 @@ export default function ModalProductInfo({ modalProductInfo, setModalProductInfo
 
         if(localStorage.getItem('user')) {
             if(sizeSelected) {
-                const userId = 1;
+                const userId = localStorage.getItem('user');
                 http.post('addToCart', {productInfo, sizeSelected, userId}).then((response) => {
                     if(response.data === false) {
                         setCreate('')
                         setError('Você já possui esse produto no seu carrinho');
                     } else {
                         setError('');
+                        console.log(response.data)
                         setCreate('Produto adicionar no carrinho')    
                     }
                     

@@ -17,7 +17,7 @@ export default function Carrousel({menuHidden, setModalCategory, setModalSubCate
     return (
 
         <>
-            
+            {localStorage.getItem('adm') ?   
             <div className={menuHidden}>
                 <ul className='list-menu'>
                     <li className='item-list-menu pb-2 ' onClick={setModalCategory}>
@@ -41,6 +41,7 @@ export default function Carrousel({menuHidden, setModalCategory, setModalSubCate
 
                 </ul>
             </div>
+            : '' }
             <Carousel>
                 <Carousel.Item>
                     <img

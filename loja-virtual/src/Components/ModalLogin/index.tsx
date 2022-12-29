@@ -63,6 +63,11 @@ export default function ModalLogin({ modalLogin, setModalLogin }: Props) {
       var user = response.data[0];
       localStorage.setItem('user', user.id);
       localStorage.setItem('token', response.data[1]);
+
+      if(user.adm) {
+        localStorage.setItem('adm', 'true');
+      }
+
       setEmail('');
       setPassword('');
       setModalLogin();
@@ -107,7 +112,6 @@ export default function ModalLogin({ modalLogin, setModalLogin }: Props) {
                   <div className="divider d-flex align-items-center my-4 justify-content-center">
                     <p className="text-center fw-bold mx-3 mb-0 color">Entre com email e senha</p>
                   </div>
-
                   <div className="form-outline mb-4">
                     <input type="email" value={email} onChange={(value) => setEmail(value.target.value)} className="inputL"
                       placeholder="Email" />
@@ -116,14 +120,10 @@ export default function ModalLogin({ modalLogin, setModalLogin }: Props) {
                     <input type="password" className="inputL" value={password} onChange={(value) => setPassword(value.target.value)}
                       placeholder="Senha" />
                   </div>
-
                   <button type="button" className="btn btn-danger btn-sm my-3" onClick={login}><strong>Entrar<strong /></strong></button> {/* style="padding-left: 2.5rem; padding-right: 2.5rem;" */}
-  
                   <a href="#!" className="coloor d-block mb-2">Esqueceu sua senha ?</a>
-
                   <button type='button' className='createUser' onClick={animate}>Cadastre-se</button>
                 </form>
-
 
                 <form className={hidenCreate}>
                   <button type='button' className='back d-flex justify-content-center' onClick={init}>
@@ -139,17 +139,9 @@ export default function ModalLogin({ modalLogin, setModalLogin }: Props) {
                     <input type="password" className="inputL" value={passwordCreate} onChange={(value) => setPasswordCreate(value.target.value)}
                       placeholder="Senha" />
                   </div>
-
                   <button type="button" className="btn btn-danger btn-sm my-3" onClick={createUser}><strong>Cadastrar<strong /></strong></button> {/* style="padding-left: 2.5rem; padding-right: 2.5rem;" */}
-
                   <p className="m-0 text-danger">{error}</p>
-
                 </form>
-
-
-
-
-
               </div>
             </div>
           </div>

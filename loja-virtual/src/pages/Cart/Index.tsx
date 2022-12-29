@@ -4,19 +4,65 @@ import Quantity from '../../Components/Quantity/Index';
 import http from '../../http/http';
 import Products from '../../Inteface/Product';
 import './Index.css';
+import Address from '../../Inteface/Address';
+import ModalAddress from '../../Components/ModalAddress';
 
 export default function IndexCart() {
 
     const [productsCart, setProductsCart] = useState<Products[][]>([]);
     const [total, setTotal] = useState<number>(0);
     const [classQuantity, setClassQuantity] = useState<string>('d-none justify-content-around my-2');
+    const [address, setAddress] = useState<Address>();
+    const [send, setSend] = useState<string>('');
+    
+    const [modalAddress, setModalAddress] = useState<boolean>(false);
+
+    <ModalAddress 
+        modalAddress={modalAddress}
+        setModalAddress={() => setModalAddress(false)}
+    />
 
     useEffect(() => {
-        http.get('getProductsThisUser/1').then((response) => {
+
+        const id = localStorage.getItem('user');
+
+        http.get('getProductsThisUser/'+id).then((response) => {
             if(response.data != 'false'){
                 setProductsCart(response.data);
             }
         });
+
+
+            http.get('getAddress/'+id).then((response) => {
+                setAddress(response.data)
+
+                var cep = response.data.cep
+
+                let args = {
+                    sCepOrigem: '01153 000',
+                    sCepDestino: cep,
+                    nVlPeso: '1',
+                    nCdFormato: '1',
+                    nVlComprimento: '20',
+                    nVlAltura: '20',
+                    nVlLargura: '20',
+                    nVlDiametro: '0',
+                    nCdServico: '04014',
+                    nCdEmpresa: '',
+                    sDsSenha: '',
+                    sCdMaoPropria: 'n',
+                    nVlValorDeclarado: '0',
+                    sCdAvisoRecebimento: 'n',
+                    StrRetorno: 'xml',
+                    nIndicaCalculo: '3',
+                };
+    
+                http.post('getPriceCor', {args}).then((response) => {
+                    setSend(response.data.cServico.Valor)
+                })
+
+            })
+
 
     }, []);
 
@@ -169,8 +215,16 @@ export default function IndexCart() {
 
                                                 <div className="d-flex justify-content-between">
                                                     <p className="mb-2">Envio</p>
-                                                    <p className="mb-2">$20.00</p>
+                                                    <p className="mb-2">$ {send}</p>
                                                 </div>
+                                                {address ?
+                                                <div className="my-3">
+                                                    <p className="m-0">{address?.state+', '+address?.city}</p>
+                                                    <p className="m-0">
+                                                        {address?.district + ', ' + address?.street + ', número ' + address?.number}
+                                                    </p>
+                                                </div>
+                                                : <p className='my-4' onClick={() => setModalAddress(true)}>Cadastre um endereço</p>}
                                                 <button type="button" className="btn text-white back border border-white btn-block btn-lg">
                                                     <div className="d-flex justify-content-between">
                                                         <span>Finalizar Compra</span>
