@@ -42,7 +42,7 @@ export default function Carrousel({menuHidden, setModalCategory, setModalSubCate
                 </ul>
             </div>
             : '' }
-            <Carousel>
+            <Carousel interval={3000}>
                 <Carousel.Item>
                     <img
                         className='d-block img-fluid size-image'

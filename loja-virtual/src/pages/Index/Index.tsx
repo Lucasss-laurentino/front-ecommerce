@@ -88,7 +88,7 @@ export default function Index() {
             <ModalLogin
                 modalLogin={modalLogin}
                 setModalLogin={() => setModalLogin(false)}
-
+                setLogado={() => setLogado(true)}
             />
 
             <ModalCategory

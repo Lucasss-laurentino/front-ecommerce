@@ -123,7 +123,6 @@ export default function ModalProductInfo({ modalProductInfo, setModalProductInfo
                         setError('Você já possui esse produto no seu carrinho');
                     } else {
                         setError('');
-                        console.log(response.data)
                         setCreate('Produto adicionar no carrinho')    
                     }
                     
@@ -156,7 +155,7 @@ export default function ModalProductInfo({ modalProductInfo, setModalProductInfo
             <Modal.Body className='p-0'>
                 <div className="row m-0 justify-content-center">
                     <div className="col-8 col-lg-5 col-md-6 col-sm-6">
-                        <Carousel>
+                        <Carousel interval={2000}>
                             <Carousel.Item>
                                 <img
                                     className="d-block img-fluid"
@@ -221,4 +220,5 @@ export default function ModalProductInfo({ modalProductInfo, setModalProductInfo
             </Modal.Footer>
         </Modal>
     );
+    
 }

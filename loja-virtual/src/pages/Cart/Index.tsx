@@ -97,12 +97,11 @@ export default function IndexCart() {
         var element = document.getElementById(product.name);
 
         if(element?.getAttribute('checked')){
-            setTotal(total - parseFloat(product.price));
+            setTotal(0);
         }
 
         http.delete('deleteItemCart/'+product.id).then((response) => {
             http.get('getProductsThisUser/1').then((response) => {
-                console.log(response.data)
                 setProductsCart(response.data);
     
             });

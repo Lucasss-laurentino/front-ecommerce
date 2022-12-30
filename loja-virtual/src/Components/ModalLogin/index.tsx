@@ -6,9 +6,10 @@ import './Login.css';
 interface Props {
   modalLogin: boolean,
   setModalLogin: () => void,
+  setLogado: () => void,
 }
 
-export default function ModalLogin({ modalLogin, setModalLogin }: Props) {
+export default function ModalLogin({ modalLogin, setModalLogin, setLogado }: Props) {
 
   const [hidenLogin, setHidenLogin] = useState<string>('text-center my-4 d-block');
   const [hidenCreate, setHidenCreate] = useState<string>('d-none');
@@ -37,8 +38,6 @@ export default function ModalLogin({ modalLogin, setModalLogin }: Props) {
   const createUser = () => {
 
     http.post('createUser', {emailCreate, passwordCreate}).then((response) => {
-
-      console.log(response.data);
       
       if(response.data == false){
         
@@ -50,7 +49,8 @@ export default function ModalLogin({ modalLogin, setModalLogin }: Props) {
 
         localStorage.setItem('user', user.id);
         localStorage.setItem('token', response.data[1]);
-
+        setLogado();
+        setModalLogin();
       }
 
     })
