@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import http from '../../http/http';
 import './Login.css';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { object, string } from "yup";
 
 interface Props {
   modalLogin: boolean,
@@ -9,70 +12,118 @@ interface Props {
   setLogado: () => void,
 }
 
+/* FORMULÁRIO DE CADASTRO E LOGIN É O MESMO */
+
+// Yup
+const schema = object({
+  email: string().required('Campo obrigatório').email('Email inválido'),
+  password: string().required('Campo obrigatório').min(3, 'Senha curta'),
+});
+
 export default function ModalLogin({ modalLogin, setModalLogin, setLogado }: Props) {
 
   const [hidenLogin, setHidenLogin] = useState<string>('text-center my-4 d-block');
-  const [hidenCreate, setHidenCreate] = useState<string>('d-none');
-
-  const [emailCreate, setEmailCreate] = useState<string>('');
-  const [passwordCreate, setPasswordCreate] = useState<string>('');
-
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
   const [error, setError] = useState<string>('');
+  const [errorLogin, setErrorLogin] = useState<string>('');
+  const [errorValidateEmail, setErrorValidateEmail] = useState<any>();
+  const [errorValidatePassword, setErrorValidatePassword] = useState<any>();
+  const [formCreate, setFormCreate] = useState<boolean>(false);
+  const { register, reset, handleSubmit, watch, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
 
-  const animate = () => {
+  // Erros yup
+  useEffect(() => {
 
-    setHidenLogin('d-none');
-    setHidenCreate('text-center my-4 d-block');
+    if (errors?.email?.message) {
+      setErrorValidateEmail(errors.email.message);
+    } else {
+      setErrorValidateEmail('')
+    }
+
+    if (errors?.password?.message) {
+      setErrorValidatePassword(errors.password.message);
+    } else {
+      setErrorValidatePassword('')
+    }
 
 
-  }
+  }, [errors?.email, errors?.password])
 
-  const init = () => {
-    setHidenLogin('text-center my-4 d-block');
-    setHidenCreate('d-none');
-  }
+  // Apagar erros de validações quando mudar de formulario
+  useEffect(() => {
 
-  const createUser = () => {
+    if (errorValidateEmail || errorValidatePassword) {
+      setErrorValidateEmail(null)
+      setErrorValidatePassword(null);
+    }
 
-    http.post('createUser', {emailCreate, passwordCreate}).then((response) => {
+    if (formCreate) {
+      setErrorLogin('');
+    } else {
+      setError('');
+    }
+
+  }, [formCreate]);
+
+  const createUser = (data: any) => {
+
+    const emailCreate = data.email;
+    const passwordCreate = data.password;
+
+    http.post('createUser', { emailCreate, passwordCreate }).then((response) => {
+
+      var user = response.data[0];
+
+      localStorage.setItem('user', user.id);
+      localStorage.setItem('token', response.data[1]);
+      setLogado();
+      setModalLogin();
+
+
+    }).catch((response) => {
       
-      if(response.data == false){
-        
-        setError('Email ja cadastrado');
-      
-      } else {
-
-        var user = response.data[0];
-
-        localStorage.setItem('user', user.id);
-        localStorage.setItem('token', response.data[1]);
-        setLogado();
-        setModalLogin();
+      if (response?.response?.status === 412) {
+        setError('Email já cadastrado')
       }
+    
+    });
 
-    })
-  
   }
 
-  const login = () => {
-    http.post('login', {email, password}).then((response) => {
+  const login = (data: any) => {
+
+    var email = data.email
+    var password = data.password;
+
+    http.post('login', { email, password }).then((response) => {
 
       var user = response.data[0];
       localStorage.setItem('user', user.id);
       localStorage.setItem('token', response.data[1]);
 
-      if(user.adm) {
+      if (user.adm) {
         localStorage.setItem('adm', 'true');
       }
 
-      setEmail('');
-      setPassword('');
       setModalLogin();
-    
+
+    }).catch((response) => {
+
+      reset();
+      setErrorLogin('Login incorreto');
+
     })
+
+
+  }
+
+  const returnLogin = () => {
+    setFormCreate(false)
+    reset();
+  }
+
+  const showFormCreate = () => {
+    setFormCreate(true)
+    reset();
   }
 
   return (
@@ -93,7 +144,7 @@ export default function ModalLogin({ modalLogin, setModalLogin, setLogado }: Pro
           <div className="container-fluid h-custom">
             <div className="row d-flex justify-content-center align-items-center h-100">
               <div className="col-10">
-                <form className={hidenLogin}>
+                <form className={hidenLogin} onSubmit={(e) => !formCreate ? handleSubmit(login)(e) : handleSubmit(createUser)(e)}>
                   <div className="d-flex flex-row align-items-center justify-content-between">
                     <p className="lead fw-normal mb-0 me-3 color">entre com:</p>
                     <div className='d-flex'>
@@ -109,38 +160,37 @@ export default function ModalLogin({ modalLogin, setModalLogin, setLogado }: Pro
                       </button>
                     </div>
                   </div>
-                  <div className="divider d-flex align-items-center my-4 justify-content-center">
-                    <p className="text-center fw-bold mx-3 mb-0 color">Entre com email e senha</p>
-                  </div>
-                  <div className="form-outline mb-4">
-                    <input type="email" value={email} onChange={(value) => setEmail(value.target.value)} className="inputL"
-                      placeholder="Email" />
-                  </div>
-                  <div className="form-outline mb-3">
-                    <input type="password" className="inputL" value={password} onChange={(value) => setPassword(value.target.value)}
-                      placeholder="Senha" />
-                  </div>
-                  <button type="button" className="btn btn-danger btn-sm my-3" onClick={login}><strong>Entrar<strong /></strong></button> {/* style="padding-left: 2.5rem; padding-right: 2.5rem;" */}
-                  <a href="#!" className="coloor d-block mb-2">Esqueceu sua senha ?</a>
-                  <button type='button' className='createUser' onClick={animate}>Cadastre-se</button>
-                </form>
+                  {formCreate ?
+                    <button type='button' className='back d-flex justify-content-center' onClick={returnLogin}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                      </svg>
+                    </button>
+                    : ''}
 
-                <form className={hidenCreate}>
-                  <button type='button' className='back d-flex justify-content-center' onClick={init}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-                      <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-                    </svg>
-                  </button>
+                  <div className="divider d-flex align-items-center my-4 justify-content-center">
+                    {formCreate ? <p className="text-center fw-bold mx-3 mb-0 color">Cadastre-se</p> : <p className="text-center fw-bold mx-3 mb-0 color">Entre com email e senha</p>}
+                  </div>
                   <div className="form-outline mb-4">
-                    <input type="email" value={emailCreate} onChange={(value) => setEmailCreate(value.target.value) } className="inputL"
+                    <input type="email" {...register("email")} className="inputL"
                       placeholder="Email" />
+                    <p className='mx-0 my-2 text-danger'>{errorValidateEmail}</p>
                   </div>
                   <div className="form-outline mb-3">
-                    <input type="password" className="inputL" value={passwordCreate} onChange={(value) => setPasswordCreate(value.target.value)}
+                    <input type="password" {...register("password")} className="inputL"
                       placeholder="Senha" />
+                    <p className='mx-0 my-2 text-danger'>{errorValidatePassword}</p>
                   </div>
-                  <button type="button" className="btn btn-danger btn-sm my-3" onClick={createUser}><strong>Cadastrar<strong /></strong></button> {/* style="padding-left: 2.5rem; padding-right: 2.5rem;" */}
-                  <p className="m-0 text-danger">{error}</p>
+                  <p className="m-0 text-danger">{!formCreate && errorLogin}</p>
+                  <p className="my-2 text-danger">{formCreate && error}</p>
+
+                  {formCreate ? <button type='submit' className='btn btn-danger'>Cadastrar</button> :
+                    <>
+                      <button type="submit" className="btn btn-danger btn-sm my-3"><strong>Entrar<strong /></strong></button>
+                      <a href="#!" className="coloor d-block mb-2">Esqueceu sua senha ?</a>
+                      <button type='button' className='createUser' onClick={showFormCreate}>Cadastre-se</button>
+                    </>
+                  }
                 </form>
               </div>
             </div>
@@ -148,8 +198,6 @@ export default function ModalLogin({ modalLogin, setModalLogin, setLogado }: Pro
         </section>
       </Modal.Body>
     </Modal>
-
-
 
   );
 

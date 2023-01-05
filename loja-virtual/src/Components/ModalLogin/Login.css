@@ -1,3 +1,11 @@
+.btn-create {
+    width: 15%;
+    padding: 4px;
+    color: white;
+    background-color: #F86666;
+    border: none;
+    border-radius: 8px;
+}
 .back {
     border: none;
     color: white;

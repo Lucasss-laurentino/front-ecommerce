@@ -224,7 +224,7 @@ export default function IndexCart() {
                                                     </p>
                                                 </div>
                                                 : <p className='my-4' onClick={() => setModalAddress(true)}>Cadastre um endereço</p>}
-                                                <button type="button" className="btn text-white back border border-white btn-block btn-lg">
+                                                <button type="button" disabled={true} className="btn text-white back border border-white btn-block btn-lg">
                                                     <div className="d-flex justify-content-between">
                                                         <span>Finalizar Compra</span>
                                                     </div>

@@ -84,7 +84,6 @@ export default function Index() {
 
     return (
         <>
-
             <ModalLogin
                 modalLogin={modalLogin}
                 setModalLogin={() => setModalLogin(false)}
